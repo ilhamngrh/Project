@@ -58,7 +58,7 @@ class BlogController extends Controller
     // memerintahkan untuk diarahkan ke view/blog/edit
     public function edit(Blog $blog)
     {
-        return view('blog.edit', compact('blog'));
+        return view('blog.edit', compact('blogs'));
     }
     // akhir memerintahkan untuk diarahkan ke view/blog/edit
 

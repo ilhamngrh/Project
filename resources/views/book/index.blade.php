@@ -26,7 +26,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
+                                    <th scope="col">IMAGE</th>
                                     <th scope="col">BOOK NAME</th>
                                     <th scope="col">AUTHOR</th>
                                     <th scope="col">PUBLISH</th>
@@ -36,11 +36,11 @@
                             <tbody>
                                 @forelse ($books as $book)
                                     <tr>
-                                        {{-- <td class="text-center">
+
+                                        <td class="text-center">
                                             <img src="{{ Storage::url('public/books/') . $book->image }}"
                                                 class="rounded" style="width: 150px">
-                                        </td> --}}
-                                        <td>{{ $book->id }}</td>
+                                        </td>
                                         <td>{{ $book->books_name }}</td>
                                         <td>{{ $book->author }}</td>
                                         <td>{{ $book->publish }}</td>
@@ -63,7 +63,7 @@
                             </tbody>
                         </table>
                         <div>
-                            {{ $books->links() }}
+                            {{ $books->links('pagination::bootstrap-4') }}
                         </div>
 
                     </div>
@@ -85,16 +85,23 @@
                 </div>
                 <div class="modal-body">
                     <!-- Form input buku -->
-                    <form action="{{ route('book.store') }}" method="POST">
+                    <form action="{{ route('book.store') }}" method="POST" enctype="multipart/form-data">
+                        >
                         @csrf
                         <!-- Tambahkan field-input buku sesuai kebutuhan Anda -->
                         <div class="form-group">
+                            <label class="font-weight-bold">Image</label>
+                            <input type="file" class="form-control " name="image" required>
+                        </div>
+                        <div class="form-group">
                             <label for="books_name">Book Name</label>
-                            <input type="text" class="form-control" id="books_name" name="books_name" required>
+                            <input type="text" class="form-control" id="books_name" name="books_name"
+                                placeholder="Masukkan Judul Buku" required>
                         </div>
                         <div class="form-group">
                             <label for="author">Author</label>
-                            <input type="text" class="form-control" id="author" name="author" required>
+                            <input type="text" class="form-control" id="author" name="author"
+                                placeholder="Masukkan Author" required>
                         </div>
                         {{-- <div class="form-group">
                             <label for="publish">Publish</label>

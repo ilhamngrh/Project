@@ -2,6 +2,7 @@
 
 use App\Models\Books;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BooksController;
 
 /*
@@ -20,3 +21,4 @@ Route::get('/', function () {
 });
 
 Route::resource('book', BooksController::class);
+Route::resource('blog', BlogController::class);

@@ -10,7 +10,7 @@ class BooksController extends Controller
 {
     public function index()
     {
-        $books = Books::latest()->paginate(10);
+        $books = Books::paginate(5);
         return view('book.index', compact('books'));
     }
 
@@ -29,17 +29,17 @@ class BooksController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            // 'image'     => 'required|image|mimes:png,jpg,jpeg',
+            'image'     => 'required|image|mimes:png,jpg,jpeg',
             'books_name'     => 'required',
             'author'   => 'required'
         ]);
 
         //upload image
-        // $image = $request->file('image');
-        // $image->storeAs('public/books', $image->hashName());
+        $image = $request->file('image');
+        $image->storeAs('public/books', $image->hashName());
 
         $book = Books::create([
-            // 'image'     => $image->hashName(),
+            'image'     => $image->hashName(),
             'books_name'     => $request->books_name,
             'author'   => $request->author
         ]);
@@ -83,14 +83,14 @@ class BooksController extends Controller
         } else {
 
             // //hapus old image
-            // Storage::disk('local')->delete('public/books/' . $book->image);
+            Storage::disk('local')->delete('public/books/' . $book->image);
 
             // //upload new image
-            // $image = $request->file('image');
-            // $image->storeAs('public/books', $image->hashName());
+            $image = $request->file('image');
+            $image->storeAs('public/books', $image->hashName());
 
             $book->update([
-                // 'image'     => $image->hashName(),
+                'image'     => $image->hashName(),
                 'books_name'     => $request->books_name,
                 'author'   => $request->author,
                 'publish'   => $request->publish
@@ -111,7 +111,7 @@ class BooksController extends Controller
     public function destroy($id)
     {
         $book = Books::findOrFail($id);
-        // Storage::disk('local')->delete('public/books/' . $book->image); //baris untuk menghapus image pada storage. ketika data dihapus maka file gambar juga yang tersimpan ikut terhapus
+        Storage::disk('local')->delete('public/books/' . $book->image); //baris untuk menghapus image pada storage. ketika data dihapus maka file gambar juga yang tersimpan ikut terhapus
         $book->delete();
 
         if ($book) {
